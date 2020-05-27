@@ -1,0 +1,30 @@
+import React, { useState, useEffect, useRef } from 'react';
+
+
+
+function App() {
+    const [timer, setTimer] = useState(0);
+    const intervalRef = useRef();
+    
+    useEffect(() => {
+
+        const id = setInterval(()=> setTimer(timer+1), 1000);
+        intervalRef.current = id;
+        console.log(timer);
+        return () => clearInterval(intervalRef.current);
+    });
+
+
+    return (
+        <div>
+            <p>{timer}</p>
+        </div>
+    );
+}
+
+
+
+
+
+
+export default App;
