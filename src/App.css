@@ -14,9 +14,26 @@ header {
     text-align: center;
 }
 
-.attendant p {
+.attendant {
     display: inline-block;
+    margin: .2rem;
     padding: .2rem .5rem;
     font-size: 1.5rem;
-    background-color: darkslateblue;
+    background-color: #515ffa;
 }
+.client {
+    display: inline-block;
+    margin: .2rem;
+    padding: .2rem .5rem;
+    font-size: 1.5rem;
+    background-color: orangered;
+}
+
+
+.attendants-section {
+    margin: auto;
+    background-color: rgba(134, 157, 221, 0.3);
+    width: 80%;
+    max-width: 800px;
+}
+
