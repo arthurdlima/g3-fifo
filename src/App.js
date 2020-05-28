@@ -21,22 +21,26 @@ function App() {
 
     // ============== iniciando state de fila =============================
 
-    const [queue, setQueue] = useState([]);
-    const [queueSize, setQueueSize] = useState(0);
+    const [queue, setQueue] = useState({
+        qSize: 0,
+        qArray: []
+    });
 
     const intervalRefQueue = useRef();
     useEffect(() => {
+        //bug, study the array push methods when updating states
         if (programTimer > 0) {
-            const id = setInterval(() => setQueueSize(queueSize + 1), 2000);
+            const id = setInterval(() => {
+                setQueue({ qSize: size+1, qArray: array.push(size)});
+            }, 2000);
             intervalRefQueue.current = id;
-            console.log(queueSize);
             return () => clearInterval(intervalRefQueue.current);
         } else {
 
         }
-    },[queueSize]);
+    },[queue]);
 
-
+    console.log(queue);
 
     function addToQueue() {
 
@@ -68,9 +72,7 @@ function App() {
             </section>
             <h2>Queue:</h2>
             <section className='clients-queue-section'>
-                <Client />
-                <Client />
-                <Client />
+                {}
             </section>
         </div>
     );
