@@ -23,21 +23,25 @@ function App() {
 
     const [queue, setQueue] = useState({
         qSize: 0,
-        qArray: []
+        qArray: [],
+        cArray: []
     });
 
     const intervalRefQueue = useRef();
     useEffect(() => {
-        //bug, study the array push methods when updating states
-        if (programTimer > 0) {
-            const id = setInterval(() => {
-                setQueue({ qSize: size+1, qArray: array.push(size)});
-            }, 2000);
-            intervalRefQueue.current = id;
-            return () => clearInterval(intervalRefQueue.current);
-        } else {
+        let size = queue.qSize + 1;
+        let array = [...queue.qArray, size];
+        let compArray = mapQueueToComponent(array); 
 
+        if (programTimer <= 1) {
+            return;
         }
+        const id = setInterval(() => {
+            setQueue({ qSize: size, qArray: array, cArray: compArray });
+        }, 2000);
+
+        intervalRefQueue.current = id;
+        return () => clearInterval(intervalRefQueue.current);
     },[queue]);
 
     console.log(queue);
@@ -46,8 +50,11 @@ function App() {
 
     }
 
-    function mapToRender() {
-
+    function mapQueueToComponent(array) {
+        const queueCompArray = array.map(client => {
+            return <Client />;
+        });
+        return queueCompArray;
     }
 
 
@@ -66,9 +73,7 @@ function App() {
             </section>
             <h2>In attendance:</h2>
             <section className='clients-attend-section'>
-                <Client />
-                <Client />
-                <Client />
+                {queue.cArray}
             </section>
             <h2>Queue:</h2>
             <section className='clients-queue-section'>
