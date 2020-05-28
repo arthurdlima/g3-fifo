@@ -17,25 +17,32 @@ function App() {
             intervalRef.current = id;
             return () => clearInterval(intervalRef.current);
         }
-    });
+    },[programTimer]);
 
     // ============== iniciando state de fila =============================
 
     const [queue, setQueue] = useState([]);
+    const [queueSize, setQueueSize] = useState(0);
+
     const intervalRefQueue = useRef();
     useEffect(() => {
-        if (programTimer <= 0) {
-            return;
-        } else {
-            const id = setInterval(() => setProgTimer(programTimer - 1), 1000);
+        if (programTimer > 0) {
+            const id = setInterval(() => setQueueSize(queueSize + 1), 2000);
             intervalRefQueue.current = id;
+            console.log(queueSize);
             return () => clearInterval(intervalRefQueue.current);
+        } else {
+
         }
-    });
+    },[queueSize]);
 
 
 
-    function mapClientsToRender() {
+    function addToQueue() {
+
+    }
+
+    function mapToRender() {
 
     }
 
@@ -46,17 +53,25 @@ function App() {
             <header>
                 <h1>MQMS</h1>
                 <p>Simulation time: {programTimer}s </p>
-                <section className='attendants-section'>
-                    <Attendant />
-                    <Attendant />
-                    <Attendant />
-                </section>
-                <section className='clients-attend-section'>
-                    <Client />
-                    <Client />
-                    <Client />
-                </section>
             </header>
+            <h2>Attendants:</h2>
+            <section className='attendants-section'>
+                <Attendant />
+                <Attendant />
+                <Attendant />
+            </section>
+            <h2>In attendance:</h2>
+            <section className='clients-attend-section'>
+                <Client />
+                <Client />
+                <Client />
+            </section>
+            <h2>Queue:</h2>
+            <section className='clients-queue-section'>
+                <Client />
+                <Client />
+                <Client />
+            </section>
         </div>
     );
 

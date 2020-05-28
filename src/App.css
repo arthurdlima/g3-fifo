@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     outline: 0;
+    text-align: center;
 }
 
 html {
@@ -11,8 +12,9 @@ html {
 }
 
 header {
-    text-align: center;
+    margin: 3rem;
 }
+
 
 .attendant {
     display: inline-block;
@@ -20,6 +22,7 @@ header {
     padding: .2rem .5rem;
     font-size: 1.5rem;
     background-color: #515ffa;
+    border-radius: .2rem;
 }
 .client {
     display: inline-block;
@@ -27,13 +30,37 @@ header {
     padding: .2rem .5rem;
     font-size: 1.5rem;
     background-color: orangered;
+    border-radius: 1rem;
 }
 
 
 .attendants-section {
-    margin: auto;
+    padding: .5rem;
+    margin: 1rem auto;
     background-color: rgba(134, 157, 221, 0.3);
     width: 80%;
     max-width: 800px;
+    height: 6rem;
+    border-radius: 1rem;
+}
+
+.clients-attend-section {
+    padding: .5rem;
+    margin: 1rem auto;
+    background-color: rgba(134, 157, 221, 0.3);
+    width: 80%;
+    max-width: 800px;
+    height: 6rem;
+    border-radius: 1rem;
+}
+
+.clients-queue-section {
+    padding: .5rem;
+    margin: 1rem auto;
+    background-color: rgba(134, 157, 221, 0.3);
+    width: 80%;
+    max-width: 800px;
+    height: 6rem;
+    border-radius: 1rem;
 }
 
