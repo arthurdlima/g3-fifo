@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import Attendant from './components/Attendant';
 import Client from './components/Client';
+import Empty from './components/Empty';
+
 
 function App() {
 
@@ -65,23 +67,22 @@ function App() {
                 <h1>MQMS</h1>
                 <p>Simulation time: {programTimer}s </p>
             </header>
-            <h2>Attendants:</h2>
-            <section className='attendants-section'>
-                <Attendant />
-                <Attendant />
-                <Attendant />
-            </section>
-            <h2>In attendance:</h2>
-            <section className='clients-attend-section'>
-                {queue.cArray}
-            </section>
-            <h2>Queue:</h2>
-            <section className='clients-queue-section'>
-                {}
-            </section>
+            <div className='container-flex'>
+                <div id='attendant-parent' style={{ flexGrow: '1', margin: '2rem'}}>
+                    <Attendant />
+                </div>
+                <div id='client-parent' style={{ flexGrow: '1', margin: '2rem'}}>
+                    <Empty />
+                </div>
+                <div style={{flexGrow: '8',margin: '2rem'}}>
+                    <section className='clients-queue-section'>
+                        {queue.cArray}  
+                    </section>
+                </div>
+            </div>
         </div>
     );
-
+    
 
 }
 

@@ -15,15 +15,30 @@ header {
     margin: 3rem;
 }
 
+.container-flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 
 .attendant {
-    display: inline-block;
     margin: .2rem;
-    padding: .2rem .5rem;
+    padding: 1rem;
     font-size: 1.5rem;
     background-color: #515ffa;
     border-radius: .2rem;
 }
+
+#attendant-parent {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: rgba(134, 157, 221, 0.3);
+    border-radius: 1rem;
+    padding: 0 2rem;
+
+}
+
 .client {
     display: inline-block;
     margin: .2rem;
@@ -33,34 +48,34 @@ header {
     border-radius: 1rem;
 }
 
+/*Fila de atendimento vazia Ø*/
 
-.attendants-section {
-    padding: .5rem;
-    margin: 1rem auto;
-    background-color: rgba(134, 157, 221, 0.3);
-    width: 80%;
-    max-width: 800px;
-    height: 6rem;
+.empty-client {
+    display: inline-block;
+    margin: .2rem;
+    padding: .2rem .5rem;
+    font-size: 1.5rem;
     border-radius: 1rem;
 }
 
-.clients-attend-section {
-    padding: .5rem;
-    margin: 1rem auto;
+
+#client-parent {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     background-color: rgba(134, 157, 221, 0.3);
-    width: 80%;
-    max-width: 800px;
-    height: 6rem;
     border-radius: 1rem;
+    padding: 0 2rem;
 }
 
 .clients-queue-section {
-    padding: .5rem;
-    margin: 1rem auto;
+    padding: .1rem;
+    margin: 0.5rem auto;
     background-color: rgba(134, 157, 221, 0.3);
-    width: 80%;
-    max-width: 800px;
-    height: 6rem;
+    /*width: 30%;*/
+    /*max-width: 800px;*/
+    /*height: 6rem;*/
     border-radius: 1rem;
+
 }
 
