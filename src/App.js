@@ -5,6 +5,9 @@ import Client from './components/Client';
 import Empty from './components/Empty';
 
 
+let renderedAtt;
+let renderedClients;
+
 function App() {
 
     // =============== iniciando state de contador de programa ============
@@ -23,43 +26,92 @@ function App() {
 
     // ============== iniciando state de fila =============================
 
-    const [queue, setQueue] = useState({
+    const inicialQueue = {
+        id: 0,
         qSize: 0,
-        qArray: [],
-        cArray: []
+        qArray: []
+    };
+
+
+
+    const [state, setState] = useState({
+        attendantNum: 4,
+        queueNum: 4,
+        queues: []
     });
+
+    let tempState = state;
 
     const intervalRefQueue = useRef();
     useEffect(() => {
-        let size = queue.qSize + 1;
-        let array = [...queue.qArray, size];
-        let compArray = mapQueueToComponent(array); 
 
         if (programTimer <= 1) {
             return;
         }
+         //initializing system
+        if (state.queues == 0) {
+            renderedClients = createQueueComponent(state.queueNum);
+            renderedAtt = mapAttToComponent(state.attendantNum);
+            let increment = 0;
+            let q = [];
+            while (increment<=state.queueNum) {
+                let iniQ = inicialQueue;
+                iniQ.id = increment++;
+                q.push(iniQ);
+                increment++;
+            }
+
+            tempState = { ...tempState, queues: q };
+            //console.log(tempState)
+        } else {
+
+        }
         const id = setInterval(() => {
-            setQueue({ qSize: size, qArray: array, cArray: compArray });
+            setState({ ...tempState });
         }, 2000);
 
         intervalRefQueue.current = id;
         return () => clearInterval(intervalRefQueue.current);
-    },[queue]);
+    },[state]);
 
-    console.log(queue);
+    console.log(state);
 
-    function addToQueue() {
-
+    function mapAttToComponent(attendantNum) {
+        let AttCompArray = [];
+        for (let i = 0; i < attendantNum; i++) {
+            AttCompArray.push(<div key={i}>< Attendant /></div>);
+        }
+        //console.log(AttCompArray);
+        return AttCompArray;
     }
+        /*
+        let size = queue.qSize + 1;
+        let array = [...queue.qArray, size];
+        let compArray = mapQueueToComponent(array);
 
-    function mapQueueToComponent(array) {
         const queueCompArray = array.map(client => {
             return <Client />;
         });
         return queueCompArray;
+        */
+    function createQueueComponent(queueNum) {
+        let queueCompArray = [];
+        for (let i = 0; i < queueNum; i++) {
+            queueCompArray.push(
+
+                <section key={i} className='clients-queue-section'>
+                    <Client />
+                </section>);
+        }
+
+        //console.log(queueCompArray)
+        return queueCompArray; 
     }
 
+    function manageQueue() {
 
+    }
+   
 
     return (
         <div>
@@ -68,16 +120,14 @@ function App() {
                 <p>Simulation time: {programTimer}s </p>
             </header>
             <div className='container-flex'>
-                <div id='attendant-parent' style={{ flexGrow: '1', margin: '2rem'}}>
-                    <Attendant />
+                <div id='attendant-parent' style={{ flexGrow: '1', margin: '2rem' }}>
+                    {renderedAtt}
                 </div>
                 <div id='client-parent' style={{ flexGrow: '1', margin: '2rem'}}>
                     <Empty />
                 </div>
                 <div style={{flexGrow: '8',margin: '2rem'}}>
-                    <section className='clients-queue-section'>
-                        {queue.cArray}  
-                    </section>
+                    {renderedClients}
                 </div>
             </div>
         </div>
