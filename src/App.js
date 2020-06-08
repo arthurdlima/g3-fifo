@@ -7,6 +7,7 @@ import Empty from './components/Empty';
 // ===== Os componentes para renderizar =================================
 let renderedAtt;
 let renderedClients;
+let InAttRender;
 
 function App() {
 
@@ -30,7 +31,8 @@ function App() {
         attendantNum: 3,
         queueNum: 3,
         queues: [],
-        inAtt: [],
+        Att: [],
+        inAtt: []
     });
 
     let tempState = state;
@@ -61,7 +63,7 @@ function App() {
 
             return;
         } else {
-            // === Inicializa fila, atualiza chegada de clientes 2 em 2 segundos ====
+            // === Inicializa fila, atualiza chegada de clientes aprox. 2 segundos ====
 
             let newState = addToQueue(tempState);
             renderedClients = mapQueueToComp(newState);
@@ -78,46 +80,37 @@ function App() {
 
     // =========================== ATENDIMENTO ==============================
 
-    const intervalRefQueue = useRef();
+    const [attState, setAttState] = useState({
+        Att: [],
+        inAtt: []
+    });
+
+    const intervalRefAtt = useRef();
     useEffect(() => {
         //========= verifica se o contador do system chegou a 0 ============
         if (programTimer <= 1) {
             return;
         }
-        // ======= inicializa sistema (roda 1 vez)=========================
-        if (state.queues == 0) {
-            renderedClients = createQueueComponent(state.queueNum);
-            renderedAtt = mapAttToComponent(state.attendantNum);
-            let increment = 0;
-            let q = [];
-            while (increment < state.queueNum) {
-                let inicialQueue = {
-                    id: increment,
-                    qSize: 0,
-                    qArray: []
-                };
-                q.push(inicialQueue);
-                increment++;
-            }
-            tempState = { ...tempState, queues: q };
-            setState({ ...tempState });
 
-            return;
-        } else {
-            // === Inicializa fila, atualiza chegada de clientes 2 em 2 segundos ====
+        // === Inicializa Atendimento, atende em aprox. 3.3 segundos ====
 
-            let newState = addToQueue(tempState);
-            renderedClients = mapQueueToComp(newState);
-
-            const id = setInterval(() => {
-                setState({ ...newState });
-            }, 2000);
-            intervalRefQueue.current = id;
-
-            return () => clearInterval(intervalRefQueue.current);
+        let i = 0;
+        let Att = [];
+        let inAtt = [];
+        while (i < state.attendantNum) {
+            Att.push(1);
+            inAtt.push(1);
+            i++
         }
 
-    }, [state]);
+        const id = setInterval(() => {
+            setAttState({ ...attState, Att: Att, inAtt: inAtt });
+        }, 3300);
+        intervalRefAtt.current = id;
+        console.log(attState);
+        return () => clearInterval(intervalRefAtt.current);
+
+    }, [attState]);
 
 
 
@@ -130,16 +123,7 @@ function App() {
         }
         return AttCompArray;
     }
-        /*
-        let size = queue.qSize + 1;
-        let array = [...queue.qArray, size];
-        let compArray = mapQueueToComponent(array);
 
-        const queueCompArray = array.map(client => {
-            return <Client />;
-        });
-        return queueCompArray;
-        */
     function createQueueComponent(queueNum) {
         let queueCompArray = [];
         for (let i = 0; i < queueNum; i++) {
@@ -168,7 +152,7 @@ function App() {
             tempArray = [];
             clients = [];
         }
-        console.log(queueCompArray);
+        //console.log(queueCompArray);
         return queueCompArray;
     }
 
@@ -222,7 +206,7 @@ function App() {
                     {renderedAtt}
                 </div>
                 <div id='client-parent' style={{ flexGrow: '1', margin: '2rem'}}>
-                    <Empty />
+                    {InAttRender}
                 </div>
                 <div style={{flexGrow: '8',margin: '2rem'}}>
                     {renderedClients}
